@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "98841967258",
+    "project_id": "mobile-d4f94",
+    "storage_bucket": "mobile-d4f94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98841967258:android:f1f9c52c12cba429997d23",
+        "android_client_info": {
+          "package_name": "com.example.mobilepro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_y0wMAZy2k8aguMq8hdxffOmI-sHLtvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
