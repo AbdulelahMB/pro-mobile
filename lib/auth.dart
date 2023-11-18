@@ -1,14 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+class auth {
+  static String name = '';
+}
+
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
 Auth_SignIn(String emailAddress, String password) async {
   var _auth = FirebaseAuth.instance;
 
   try {
-    await _auth.signInWithEmailAndPassword(
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
       email: emailAddress,
       password: password,
     );
+    String uid = userCredential.user!.uid;
+    auth.name =
+        (await _firestore.collection('users').doc(uid).get()).get('name');
+
     return true; // Return true on successful sign-in
   } catch (e) {
     print(e);
@@ -24,7 +34,6 @@ Auth_SignUp(String emailAddress, String password, String name) async {
       email: emailAddress,
       password: password,
     );
-    credential.user!.sendEmailVerification();
 
     final uid = credential.user!.uid;
     final usersCollection = FirebaseFirestore.instance.collection('users');

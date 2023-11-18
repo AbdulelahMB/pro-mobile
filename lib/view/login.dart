@@ -10,7 +10,7 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
-  bool isChecked = false;
+  bool showSpinner = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -37,7 +37,16 @@ class _MyLoginState extends State<MyLogin> {
               child: Text(
                 'Welcome\nBack',
                 style: TextStyle(
-                    color: const Color.fromARGB(255, 0, 0, 0), fontSize: 33),
+                  fontSize: 33,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(2.0, 9.0),
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ],
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -137,7 +146,7 @@ class _MyLoginState extends State<MyLogin> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    Auth_Reset(email.text);
+                                    Navigator.pushNamed(context, 'forget');
                                   },
                                   child: Text(
                                     'Forgot Password',

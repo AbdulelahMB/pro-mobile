@@ -10,19 +10,33 @@ class home extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Home',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Text('Home'),
+          backgroundColor: Color.fromARGB(255, 4, 116, 145),
+          title: Text(
+            "Chat Csc489",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(2.0, 2.0),
+                  color: Colors.black.withOpacity(0.2),
+                ),
+              ],
+            ),
+          ),
+          centerTitle: true,
         ),
         body: Container(
-          child: Center(
-            child: ChatPage(),
-          ),
-        ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blue.shade900, Colors.blue.shade200],
+              ),
+            ),
+            child: ChatPage()),
       ),
     );
   }

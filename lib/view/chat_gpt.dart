@@ -1,41 +1,42 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const String apiKey = "";
+Future<String> sendMessage(String question) async {
+  final String endpoint =
+      "https://csc489mobile.cognitiveservices.azure.com"; // Replace with your actual endpoint
+  final String projectName = "mobile"; // Replace with your actual project name
+  final String deploymentName =
+      "production"; // Replace with your actual deployment name
+  final String url =
+      "$endpoint/language/:query-knowledgebases?projectName=$projectName&deploymentName=$deploymentName&api-version=2021-10-01";
+  final String subscriptionKey = "1f171529785141ee82ded9e3437254a3";
 
-Future<Map<String, dynamic>> sendMessage(String message) async {
-  final url = 'https://api.openai.com/v1/chat/completions';
-  final headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer $apiKey',
+  final Map<String, dynamic> data = {
+    "top": 3,
+    "question": question,
+    "includeUnstructuredSources": true,
+    "answerSpanRequest": {"enable": true}
   };
 
-  final body = jsonEncode({
-    'model': "gpt-3.5-turbo",
-    'messages': [
-      {
-        "role": "system",
-        "content": "You are a helpful Doctor that give advices to Patients."
-      },
-      {
-        "role": "system",
-        "content":
-            'answer the following question, refuse if the question is not health or medical related: "$message"'
-      }
-    ],
-    'max_tokens': 4000,
-    'n': 1,
-    'stop': null,
-    'temperature': 0.7,
-  });
-
-  final response =
-      await http.post(Uri.parse(url), headers: headers, body: body);
-
-  if (response.statusCode != 200) {
-    throw Exception('Failed to send message: ${response.body}');
+  final http.Response response = await http.post(
+    Uri.parse(url),
+    headers: {
+      "Ocp-Apim-Subscription-Key": subscriptionKey,
+      "Content-Type": "application/json"
+    },
+    body: jsonEncode(data),
+  );
+  print(url);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+    if (jsonResponse.containsKey('answers') &&
+        jsonResponse['answers'].isNotEmpty) {
+      // return jsonResponse['answers'][0]['answer'];
+      return jsonResponse['answers'][0]['answerSpan']['text'];
+    } else {
+      throw Exception('No answer found');
+    }
+  } else {
+    throw Exception('Failed to load response');
   }
-
-  final jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
-  return jsonResponse['choices'][0];
 }

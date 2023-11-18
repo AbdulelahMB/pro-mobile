@@ -32,7 +32,17 @@ class _MyRegisterState extends State<MyRegister> {
               padding: EdgeInsets.only(left: 35, top: 30),
               child: Text(
                 'Create\nAccount',
-                style: TextStyle(color: Colors.white, fontSize: 33),
+                style: TextStyle(
+                  fontSize: 33,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(2.0, 9.0),
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ],
+                ),
               ),
             ),
             SingleChildScrollView(

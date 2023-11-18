@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:mobilepro/auth.dart';
 
 import 'chat_gpt.dart';
 
@@ -18,9 +19,11 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    print(auth.name);
     messges.insert(0, {
       'sender': 'GPT',
-      'message': "Hello I am an AI Docter, Tell me how You feel?"
+      'message':
+          "Hello ${auth.name} I am your assistant in CSC489. Ask me any questions about this course "
     });
   }
 
@@ -36,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
     });
     try {
       final response = await sendMessage(message);
-      answer = response['message']['content'];
+      answer = response;
     } catch (e) {
       print(e);
     }
@@ -62,12 +65,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.805,
+      // height: size.height,
       child: Column(
         children: [
           Expanded(
             child: Container(
-              color: Colors.blue.withOpacity(0),
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 reverse: true,
@@ -103,6 +105,12 @@ class _ChatPageState extends State<ChatPage> {
                               messges[index]['message'],
                               style: TextStyle(
                                 color: Colors.white,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(2.0, 2.0),
+                                    color: Colors.black.withOpacity(0.2),
+                                  ),
+                                ],
                                 fontSize: 20,
                               ),
                             ),
@@ -121,7 +129,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.white.withOpacity(0.7),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(width: 2, color: Colors.blue.shade200),
             ),
@@ -154,6 +162,10 @@ class _ChatPageState extends State<ChatPage> {
                       ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 10,
+            width: size.width,
           ),
         ],
       ),
