@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class auth {
   static String name = '';
+  static String key = '';
+  static String end = '';
+  static String project = '';
 }
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,6 +21,13 @@ Auth_SignIn(String emailAddress, String password) async {
     String uid = userCredential.user!.uid;
     auth.name =
         (await _firestore.collection('users').doc(uid).get()).get('name');
+
+    auth.key = (await _firestore.collection('api').doc('s').get()).get('key');
+
+    auth.end = (await _firestore.collection('api').doc('s').get()).get('end');
+
+    auth.project =
+        (await _firestore.collection('api').doc('s').get()).get('name');
 
     return true; // Return true on successful sign-in
   } catch (e) {

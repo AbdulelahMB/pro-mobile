@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:mobilepro/auth.dart';
+import 'package:mobilepro/auth.dart';
 
 Future<String> sendMessage(String question) async {
-  final String endpoint =
-      "https://csc489mobile.cognitiveservices.azure.com"; // Replace with your actual endpoint
-  final String projectName = "mobile"; // Replace with your actual project name
+  final String endpoint = auth.end;
+  // Replace with your actual endpoint
+  final String projectName =
+      auth.project; // Replace with your actual project name
   final String deploymentName =
       "production"; // Replace with your actual deployment name
   final String url =
       "$endpoint/language/:query-knowledgebases?projectName=$projectName&deploymentName=$deploymentName&api-version=2021-10-01";
-  final String subscriptionKey = "1f171529785141ee82ded9e3437254a3";
+  final String subscriptionKey = auth.key;
 
   final Map<String, dynamic> data = {
     "top": 3,
